@@ -1,0 +1,164 @@
+{
+  "workouts": [
+    {
+      "id": "1",
+      "title": "Push-up strength",
+      "sets": [
+        {
+          "unit": {
+            "exercise": {
+              "id": "1",
+              "title": "Diamond push-up"
+            },
+            "type": "Repetition",
+            "duration": 8
+          },
+          "repetition": 5,
+          "rest": 60
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "2",
+              "title": "Push-up"
+            },
+            "type": "Repetition",
+            "duration": 8
+          },
+          "repetition": 5,
+          "rest": 60
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "3",
+              "title": "Plank-up"
+            },
+            "type": "Repetition",
+            "duration": 8
+          },
+          "repetition": 5,
+          "rest": 45
+        }
+      ],
+      "preparation": 5
+    },
+    {
+      "id": "2",
+      "title": "Abs HIIT",
+      "sets": [
+        {
+          "unit": {
+            "exercise": {
+              "id": "4",
+              "title": "Negative crunch"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "5",
+              "title": "Reverse crunch"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "6",
+              "title": "Side plank"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "7",
+              "title": "Plank squeeze"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "8",
+              "title": "Leg raise"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "9",
+              "title": "Toe touches"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "10",
+              "title": "Knee to elbow plank"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "11",
+              "title": "Leg scissors"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "12",
+              "title": "Oblique crunch"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        },
+        {
+          "unit": {
+            "exercise": {
+              "id": "13",
+              "title": "Russian twist"
+            },
+            "type": "Duration",
+            "duration": 45
+          },
+          "rest": 15
+        }
+      ],
+      "preparation": 5
+    }
+  ]
+}
