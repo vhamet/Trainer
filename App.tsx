@@ -7,12 +7,14 @@ import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 
 import AppTabs from './src/navigation/AppTabs';
-import dataReducer from './src/store/reducers/data';
+import settingsReducer from './src/store/reducers/settings';
 import trainingReducer from './src/store/reducers/training';
+import dataReducer from './src/store/reducers/data';
 
 const rootReducer = combineReducers({
   data: dataReducer,
   currentTraining: trainingReducer,
+  settings: settingsReducer,
 });
 const store = createStore(rootReducer);
 

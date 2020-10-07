@@ -63,6 +63,7 @@ const AppTabs: React.FC = () => {
         (await AsyncStorage.getItem('workoutId')) || '0',
         10,
       );
+
       dispatch({
         type: INIT_TRAINING,
         workout: workouts.find((w) => w.id === workoutId) || workouts[0],

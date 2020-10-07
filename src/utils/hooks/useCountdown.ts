@@ -61,7 +61,7 @@ const useCountdown = (): {
     setCount(duration);
   };
 
-  const stop = () => timer.clear();
+  const stop = () => timer && timer.clear();
 
   const pause = () => {
     setIsRunning(false);

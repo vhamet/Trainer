@@ -7,6 +7,7 @@ import RunningSet from '../components/Training/RunningSet/RunningSet';
 import StylableButton from '../components/StyledButton/StyledButton';
 import { State } from '../models/redux';
 import { START_TRAINING } from '../store/actions/training';
+import SoundSetting from '../components/SoundSetting/SoundSetting';
 
 const TrainingScreen: React.FC = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ const TrainingScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.sound}>
+        <SoundSetting />
+      </View>
       <Text style={styles.title}>{workout.title}</Text>
       {hasStarted ? (
         <RunningSet />
@@ -39,11 +43,17 @@ const TrainingScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: 50,
-    backgroundColor: 'rgb(25,25,25)',
+    position: 'relative',
+    padding: 10,
+    paddingTop: 80,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgb(25,25,25)',
+  },
+  sound: {
+    position: 'absolute',
+    top: 45,
+    right: 5,
   },
   title: {
     color: 'tomato',

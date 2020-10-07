@@ -1,7 +1,7 @@
 import {
   INIT_TRAINING,
   START_TRAINING,
-  PIPE_NEXT,
+  GO_TO_PIPE_INDEX,
 } from '../../../store/actions/training';
 import { Workout } from '../../app';
 
@@ -14,6 +14,7 @@ export interface StartTrainingAction {
   type: typeof START_TRAINING;
 }
 
-export interface PipeNextAction {
-  type: typeof PIPE_NEXT;
+export interface GoToPipeIndexAction {
+  type: typeof GO_TO_PIPE_INDEX;
+  index: number;
 }
