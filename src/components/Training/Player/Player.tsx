@@ -35,9 +35,9 @@ const Player: React.FC<PlayerProps> = ({
       </TouchableIcon>
       <TouchableIcon onPress={onToggle} disabled={!canPause}>
         {isRunning ? (
-          <MaterialIcons name="pause" size={38} color={canPause ? 'tomato' : '#ffd0c7'} />
+          <MaterialIcons name="pause" size={38} color={canPause ? 'tomato' : 'transparent'} />
         ) : (
-          <AntDesign name="caretright" size={32} color={canPause ? 'tomato' : '#ffd0c7'} />
+          <AntDesign name="caretright" size={32} color={canPause ? 'tomato' : 'transparent'} />
         )}
       </TouchableIcon>
       <TouchableIcon onPress={onNext} disabled={!hasNext}>
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '40%',
   },
+  hidden: { opacity: 0, height: 0 },
 });
 
 export default Player;

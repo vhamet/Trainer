@@ -71,7 +71,7 @@ const fillDb = async () => {
 
 export const init = async () => {
   try {
-    db = SQLite.openDatabase('trainer.db');
+    db = SQLite.openDatabase('trainer.database');
     await executeSqlAsync(queries.createTableUnitType);
     await executeSqlAsync(queries.createTableExercise);
     await executeSqlAsync(queries.createTableSetUnit);
@@ -109,11 +109,11 @@ export const getData = async () => {
       }
       const unit = new SetUnit(
         exercises.get(row.exerciseId)!,
-        row.type,
+        row.typeId,
         row.duration,
         row.unitRest
       );
-      const set = new Set(unit, row.setRest, row.repetition);
+      const set = new Set(unit, row.repetition, row.setRest);
 
       if (!currentWorkout || currentWorkout.id !== row.workoutId) {
         currentSets = [set];
@@ -132,6 +132,6 @@ export const getData = async () => {
     return { workouts, exercises };
   } catch (error) {
     console.log('DB FETCHING DATA ERROR:', error);
-    throw Error('Could not fetch data ! Please try again later')
+    throw Error('Could not fetch data ! Please try again later');
   }
 };

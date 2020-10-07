@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Steps from '../components/Training/Step/Steps';
 import Center from '../components/Center/Center';
 import RunningSet from '../components/Training/RunningSet/RunningSet';
 import StylableButton from '../components/StyledButton/StyledButton';
@@ -12,7 +11,7 @@ import { START_TRAINING } from '../store/actions/training';
 const TrainingScreen = () => {
   const dispatch = useDispatch();
   const { workout, hasStarted } = useSelector(
-    (state: State) => state.currentTraining
+    (state: State) => state.currentTraining,
   );
 
   if (!workout) {
@@ -28,7 +27,6 @@ const TrainingScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{workout.title}</Text>
-      {/* <Steps sets={workoutx.sets} /> */}
       {hasStarted ? (
         <RunningSet workout={workout} />
       ) : (

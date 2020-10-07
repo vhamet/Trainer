@@ -1,14 +1,14 @@
 import Exercise from './Exercise';
 
 export enum SetType {
-  Duration,
-  Repetition,
+  Repetition = 1,
+  Duration = 2,
 }
 
 export default class SetUnit {
   constructor(
     public exercise: Exercise,
-    public type: string,
+    public type: number,
     public duration: number,
     public rest: number
   ) {}

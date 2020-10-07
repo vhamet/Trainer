@@ -4,6 +4,7 @@ class Timer {
   remaining: number;
   start: Date;
   timerId: number;
+
   constructor(public callback: () => void, public delay: number) {
     this.remaining = delay;
     this.timerId = -1;
@@ -32,13 +33,12 @@ const useCountdown = (): {
   count: number | undefined;
   isRunning: boolean;
   done: boolean;
-  start: (duration: number, nextCount?: number) => void;
+  start: (duration: number) => void;
   stop: () => void;
   pause: () => void;
   resume: () => void;
 } => {
   const [count, setCount] = useState<number>();
-  const [nextCount, setNextCount] = useState<number>();
   const [isRunning, setIsRunning] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -49,22 +49,16 @@ const useCountdown = (): {
       } else {
         setIsRunning(false);
         setDone(true);
-        if (nextCount) {
-          start(nextCount);
-        }
       }
     }
 
     return () => timer && timer.clear();
   }, [count]);
 
-  const start = (duration: number, nextCount?: number) => {
+  const start = (duration: number) => {
     setDone(false);
     setIsRunning(true);
     setCount(duration);
-    if (nextCount) {
-      setNextCount(nextCount);
-    }
   };
 
   const stop = () => timer.clear();
@@ -79,7 +73,15 @@ const useCountdown = (): {
     timer.resume();
   };
 
-  return { count, isRunning, done, start, stop, pause, resume };
+  return {
+    count,
+    isRunning,
+    done,
+    start,
+    stop,
+    pause,
+    resume,
+  };
 };
 
 export default useCountdown;

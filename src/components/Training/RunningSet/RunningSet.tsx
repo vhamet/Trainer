@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Timer from '..//Timer/Timer';
+import Countdown from '../Countdown/Countdown';
 import Player from '../Player/Player';
 import useCountdown from '../../../utils/hooks/useCountdown';
 import State from '../../../models/redux/state';
 import Workout from '../../../models/Workout';
-import { GO_TO_SET, NEXT_REPETITION } from '../../../store/actions/training';
+import { SetType } from '../../../models/SetUnit';
+import { PIPE_NEXT } from '../../../store/actions/training';
 import StylableButton from '../../StyledButton/StyledButton';
 
 interface RunningSetProps {
@@ -16,10 +17,10 @@ interface RunningSetProps {
 
 const RunningSet: React.FC<RunningSetProps> = ({ workout }) => {
   const dispatch = useDispatch();
-  const { setIndex, repetition } = useSelector(
+  const { pipe, pipeIndex } = useSelector(
     (state: State) => state.currentTraining
   );
-  console.log('repetition', repetition);
+
   const {
     count: countdown,
     isRunning,
@@ -29,107 +30,53 @@ const RunningSet: React.FC<RunningSetProps> = ({ workout }) => {
     resume,
   } = useCountdown();
 
-  const [isResting, setIsResting] = useState(false);
-
-  const set = workout.sets[setIndex];
-  const numberOfSets = workout.sets.length || 0;
-
   useEffect(() => {
-    startCountdown(workout.preparation);
-  }, []);
+    if (pipe[pipeIndex].type === SetType.Duration && pipe[pipeIndex].duration > 0) {
+      //   startCountdown(pipe[pipeIndex].duration);
+      startCountdown(5);
+    }
+  }, [pipeIndex]);
 
   useEffect(() => {
     if (done) {
-      if (setIndex < 0) {
-        console.log('done INDEX 0');
-        dispatch({ type: GO_TO_SET, index: 0 });
-      } else {
-        setIsResting(false);
-        console.log('done NEXT REP');
-        if (set?.repetition && repetition < set.repetition) {
-          dispatch({ type: NEXT_REPETITION });
-        } else {
-          dispatch({ type: GO_TO_SET, index: setIndex + 1 });
-        }
-      }
+      dispatch({ type: PIPE_NEXT });
     }
-  }, [done, setIndex, set]);
+  }, [done]);
 
-  useEffect(() => {
-    if (set?.unit.type === 'Duration') {
-      // set.unit.rest
-      //   ? startCountdown(set.unit.duration, set.unit.rest)
-      //   : startCountdown(set.unit.duration);
-      set.unit.rest ? startCountdown(10, 3) : startCountdown(4);
-    }
-  }, [setIndex, repetition]);
-
-  const handleNext = () => {
-    if (!!set && set.unit.rest > 0) {
-      // startCountdown(unit.rest);
-      setIsResting(true);
-      startCountdown(3);
-    } else {
-      if (set?.repetition && repetition < set.repetition) {
-        dispatch({ type: NEXT_REPETITION });
-      } else {
-        dispatch({ type: GO_TO_SET, index: setIndex + 1 });
-      }
-    }
-  };
-
-  const runningLabel = () => {
-    let label = 'GET READY !';
-    if (setIndex >= 0) {
-      if (isResting) {
-        label = `REST - Next: ${set.unit.exercise.title}`;
-      } else {
-        label = `${set.unit.exercise.title} - ${repetition} / ${set.repetition}`;
-      }
-    }
-
-    return label;
-  };
-  const label = runningLabel();
-  const hasTimer = isRunning || setIndex < 0 || set?.unit.type === 'Duration';
+  const handleNext = () => dispatch({ type: PIPE_NEXT });
 
   return (
     <View>
-      <Text style={styles.runningLabel}>{label}</Text>
+      <Text style={styles.runningLabel}>{pipe[pipeIndex].label}</Text>
+      <Text style={styles.nextLabel}>{`Next: ${
+        pipeIndex < pipe.length - 1 ? pipe[pipeIndex + 1].label : 'FINISHED !'
+      }`}</Text>
 
-      {hasTimer && <Timer time={countdown!} />}
-      {set?.unit.type === 'Repetion' && (
+      {pipe[pipeIndex].type === SetType.Duration ? (
+        <Countdown count={countdown!} duration={pipe[pipeIndex].duration}/>
+      ) : (
         <StylableButton title="DONE" onPress={handleNext} />
       )}
-
+      
       <Player
-        canPause={hasTimer}
+        canPause={pipe[pipeIndex].type === SetType.Duration}
         isRunning={isRunning}
-        hasPrevious={setIndex > 0}
-        hasNext={setIndex < numberOfSets - 1}
+        hasPrevious={pipeIndex > 0}
+        hasNext={pipeIndex < pipe.length - 1}
         onToggle={isRunning ? pause : resume}
         onPrevious={() => {}}
         onNext={handleNext}
       />
     </View>
   );
-  //   {setIndex >= 0 && (
-  //     <Text>{`${set!.unit.exercise.title} - ${repetition} / ${
-  //       set!.repetition
-  //     }`}</Text>
-  //   )}
-  //   {!!countdown && <Timer time={countdown!} />}
-
-  //   {!!set && set!.unit.type === 'Repetion' && (
-  //     <StylableButton title="DONE" onPress={handleNext} style={styles.button}/>
-  //   )}
-  //   {hasStarted && (
-
-  //   )}
 };
 
 const styles = StyleSheet.create({
   runningLabel: {
+    fontSize: 30,
+    color: '#EDEDED',
+  },
+  nextLabel: {
     fontSize: 20,
     color: '#EDEDED',
   },
