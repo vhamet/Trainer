@@ -8,8 +8,8 @@ import {
 } from 'react-navigation';
 
 import WorkoutItem from '../components/Workouts/WorkoutItem/WorkoutItem';
-import State from '../models/redux/state';
-import Workout from '../models/Workout';
+import { State } from '../models/redux';
+import { Workout } from '../models/app';
 import { INIT_TRAINING } from '../store/actions/training';
 import useCountdown from '../utils/hooks/useCountdown';
 
@@ -19,7 +19,7 @@ interface WorkoutsScreenProps {
 
 const WorkoutsScreen: React.FC<WorkoutsScreenProps> = ({
   navigation: { navigate },
-}) => {
+}: WorkoutsScreenProps) => {
   const dispatch = useDispatch();
   const { workouts } = useSelector((state: State) => state.data);
   const { stop: stopCountdown } = useCountdown();
@@ -34,11 +34,10 @@ const WorkoutsScreen: React.FC<WorkoutsScreenProps> = ({
     return <Text>Loading...</Text>;
   }
 
-
   return (
     <View style={styles.container}>
       <FlatList
-        keyExtractor={item => `${item.id}`}
+        keyExtractor={(item) => `${item.id}`}
         data={workouts}
         renderItem={({ item }) => (
           <WorkoutItem workout={item} onSelect={selectWorkout} />

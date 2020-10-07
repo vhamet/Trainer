@@ -8,9 +8,15 @@ interface WorkoutItemProps {
   onSelect: (workout: Workout) => void;
 }
 
-const WorkoutItem: React.FC<WorkoutItemProps> = ({ workout, onSelect }) => {
+const WorkoutItem: React.FC<WorkoutItemProps> = ({
+  workout,
+  onSelect,
+}: WorkoutItemProps) => {
   return (
-    <TouchableOpacity onPress={() => onSelect(workout)} style={styles.container}>
+    <TouchableOpacity
+      onPress={() => onSelect(workout)}
+      style={styles.container}
+    >
       <View style={styles.content}>
         <Text>{workout.title}</Text>
       </View>

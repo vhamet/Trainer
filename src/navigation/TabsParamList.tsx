@@ -1,5 +1,5 @@
 export type TabsParamList = {
-    Workouts: undefined;
-    Training: undefined;
-    Exercises: undefined;
-  };
+  Workouts: undefined;
+  Training: undefined;
+  Exercises: undefined;
+};

@@ -3,14 +3,15 @@ import { Text, TouchableOpacity } from 'react-native';
 
 interface TouchableIconProps {
   onPress: () => void;
-  [prop: string]: any;
+  children: React.ReactNode;
+  [prop: string]: unknown;
 }
 
 const TouchableIcon: React.FC<TouchableIconProps> = ({
   onPress,
   children,
   ...props
-}) => (
+}: TouchableIconProps) => (
   <TouchableOpacity onPress={onPress} {...props}>
     <Text>{children}</Text>
   </TouchableOpacity>

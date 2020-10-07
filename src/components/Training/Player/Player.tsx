@@ -22,7 +22,7 @@ const Player: React.FC<PlayerProps> = ({
   onToggle,
   onPrevious,
   onNext,
-}) => {
+}: PlayerProps) => {
   return (
     <View style={styles.container}>
       <TouchableIcon onPress={onPrevious} disabled={!hasPrevious}>
@@ -35,9 +35,17 @@ const Player: React.FC<PlayerProps> = ({
       </TouchableIcon>
       <TouchableIcon onPress={onToggle} disabled={!canPause}>
         {isRunning ? (
-          <MaterialIcons name="pause" size={38} color={canPause ? 'tomato' : 'transparent'} />
+          <MaterialIcons
+            name="pause"
+            size={38}
+            color={canPause ? 'tomato' : 'transparent'}
+          />
         ) : (
-          <AntDesign name="caretright" size={32} color={canPause ? 'tomato' : 'transparent'} />
+          <AntDesign
+            name="caretright"
+            size={32}
+            color={canPause ? 'tomato' : 'transparent'}
+          />
         )}
       </TouchableIcon>
       <TouchableIcon onPress={onNext} disabled={!hasNext}>

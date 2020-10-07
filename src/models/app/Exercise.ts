@@ -26,6 +26,6 @@ export default class Exercise {
     public id: number,
     public title: string,
     public type?: string[],
-    public muscle?: string[]
+    public muscle?: string[],
   ) {}
 }

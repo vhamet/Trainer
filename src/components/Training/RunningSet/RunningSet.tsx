@@ -1,24 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Countdown from '../Countdown/Countdown';
 import Player from '../Player/Player';
 import useCountdown from '../../../utils/hooks/useCountdown';
-import State from '../../../models/redux/state';
-import Workout from '../../../models/Workout';
-import { SetType } from '../../../models/SetUnit';
+import { State } from '../../../models/redux';
+import { SetType } from '../../../models/app';
 import { PIPE_NEXT } from '../../../store/actions/training';
 import StylableButton from '../../StyledButton/StyledButton';
 
-interface RunningSetProps {
-  workout: Workout;
-}
-
-const RunningSet: React.FC<RunningSetProps> = ({ workout }) => {
+const RunningSet: React.FC = () => {
   const dispatch = useDispatch();
   const { pipe, pipeIndex } = useSelector(
-    (state: State) => state.currentTraining
+    (state: State) => state.currentTraining,
   );
 
   const {
@@ -31,7 +26,10 @@ const RunningSet: React.FC<RunningSetProps> = ({ workout }) => {
   } = useCountdown();
 
   useEffect(() => {
-    if (pipe[pipeIndex].type === SetType.Duration && pipe[pipeIndex].duration > 0) {
+    if (
+      pipe[pipeIndex].type === SetType.Duration &&
+      pipe[pipeIndex].duration > 0
+    ) {
       //   startCountdown(pipe[pipeIndex].duration);
       startCountdown(5);
     }
@@ -53,18 +51,18 @@ const RunningSet: React.FC<RunningSetProps> = ({ workout }) => {
       }`}</Text>
 
       {pipe[pipeIndex].type === SetType.Duration ? (
-        <Countdown count={countdown!} duration={pipe[pipeIndex].duration}/>
+        <Countdown count={countdown!} duration={pipe[pipeIndex].duration} />
       ) : (
         <StylableButton title="DONE" onPress={handleNext} />
       )}
-      
+
       <Player
         canPause={pipe[pipeIndex].type === SetType.Duration}
         isRunning={isRunning}
         hasPrevious={pipeIndex > 0}
         hasNext={pipeIndex < pipe.length - 1}
         onToggle={isRunning ? pause : resume}
-        onPrevious={() => {}}
+        onPrevious={console.log}
         onNext={handleNext}
       />
     </View>

@@ -2,7 +2,5 @@ export const INIT_TRAINING = 'INIT_TRAINING';
 export const START_TRAINING = 'START_TRAINING';
 export const PIPE_NEXT = 'PIPE_NEXT';
 
-
-
 export const PAUSE_TRAINING = 'PAUSE_TRAINING';
 export const QUIT_TRAINING = 'QUIT_TRAINING';

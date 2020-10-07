@@ -33,8 +33,8 @@ export const setUnits = [
 ];
 
 export const workouts = [
-   ['Push-up strength', 5] ,
-   ['Abs HIIT', 5] ,
+  ['Push-up strength', 5],
+  ['Abs HIIT', 5],
 ];
 
 export const workoutSets = [
@@ -51,4 +51,4 @@ export const workoutSets = [
   [2, 11, 0, 1],
   [2, 12, 0, 1],
   [2, 13, 0, 1],
-]
+];

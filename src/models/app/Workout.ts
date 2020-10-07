@@ -5,6 +5,6 @@ export default class Workout {
     public id: number,
     public title: string,
     public preparation: number,
-    public sets: Set[]
+    public sets: Set[],
   ) {}
 }

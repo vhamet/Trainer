@@ -1,7 +1,7 @@
 import { INIT_TRAINING, START_TRAINING, PIPE_NEXT } from '../actions/training';
-import Training, { PipeElement } from '../../models/redux/state/Training';
-import Workout from '../../models/Workout';
-import { SetType } from '../../models/SetUnit';
+import Training, { PipeElement } from '../../models/redux/state/training';
+import { Workout, SetType } from '../../models/app';
+import { TrainingActionTypes } from '../../models/redux';
 
 const initialState: Training = {
   workout: null,
@@ -17,15 +17,18 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
 
   for (const set of workout.sets) {
     for (let rep = 1; rep <= set.repetition; rep++) {
-      const currentRep = set.repetition > 1 ? ` (${rep}/${set.repetition})` : '';
-      const repetitions = set.unit.type === SetType.Repetition ? `${set.unit.duration} x `: '';
-      const duration = set.unit.type === SetType.Duration ? ` x ${set.unit.duration}s`: '';
+      const currentRep =
+        set.repetition > 1 ? ` (${rep}/${set.repetition})` : '';
+      const repetitions =
+        set.unit.type === SetType.Repetition ? `${set.unit.duration} x ` : '';
+      const duration =
+        set.unit.type === SetType.Duration ? ` x ${set.unit.duration}s` : '';
       pipe.push(
         new PipeElement(
           `${repetitions}${set.unit.exercise.title}${duration}${currentRep}`,
           set.unit.duration,
-          set.unit.type
-        )
+          set.unit.type,
+        ),
       );
       if (set.unit.rest) {
         pipe.push(new PipeElement('REST', set.unit.rest, SetType.Duration));
@@ -36,8 +39,8 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
         new PipeElement(
           `REST - Set ${set.unit.exercise.title} done !`,
           set.rest,
-          SetType.Duration
-        )
+          SetType.Duration,
+        ),
       );
     }
   }
@@ -45,7 +48,10 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
   return pipe;
 };
 
-export default (state = initialState, action: any) => {
+export default (
+  state = initialState,
+  action: TrainingActionTypes,
+): Training => {
   switch (action.type) {
     case INIT_TRAINING:
       return {

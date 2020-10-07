@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-interface CenterProps {}
-
-const Center: React.FC<CenterProps> = ({ children }) => {
+const Center: React.FC = ({ children }) => {
   return <View style={styles.center}>{children}</View>;
 };
 

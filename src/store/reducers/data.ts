@@ -1,12 +1,15 @@
 import { INIT_DATA } from '../actions/data';
-import Workouts from '../../models/redux/state/Data';
+import { DataStateType, DataActionTypes } from '../../models/redux';
 
-const initialState: Workouts = {
+const initialState: DataStateType = {
   workouts: [],
-  exercises: [],
+  exercises: new Map(),
 };
 
-export default (state = initialState, action: any) => {
+export default (
+  state = initialState,
+  action: DataActionTypes,
+): DataStateType => {
   switch (action.type) {
     case INIT_DATA:
       return { workouts: action.workouts, exercises: action.exercises };

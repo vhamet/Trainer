@@ -13,11 +13,36 @@ import { INIT_DATA } from '../store/actions/data';
 import { INIT_TRAINING } from '../store/actions/training';
 import * as db from '../utils/db/database';
 
-import State from '../models/redux/state';
+import { State } from '../models/redux';
+import { RouteProp } from '@react-navigation/native';
 
 const Tabs = createBottomTabNavigator<TabsParamList>();
 
-const AppTabs = () => {
+interface TabBarElementProps {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  route: RouteProp<Record<string, object | undefined>, string>;
+  color: string;
+  size: number;
+}
+
+const TabBarElement: React.FC<TabBarElementProps> = ({
+  route,
+  color,
+  size,
+}: TabBarElementProps) => {
+  switch (route.name) {
+    case 'Workouts':
+      return <Feather name={'list'} size={size} color={color} />;
+    case 'Training':
+      return <AntDesign name={'rocket1'} size={size} color={color} />;
+    case 'Exercises':
+      return <Feather name={'settings'} size={size} color={color} />;
+    default:
+      return null;
+  }
+};
+
+const AppTabs: React.FC = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const { workouts } = useSelector((state: State) => state.data);
@@ -35,10 +60,12 @@ const AppTabs = () => {
   useEffect(() => {
     const setTraining = async () => {
       const workoutId = parseInt(
-        (await AsyncStorage.getItem('workoutId')) || '0', 10);
+        (await AsyncStorage.getItem('workoutId')) || '0',
+        10,
+      );
       dispatch({
         type: INIT_TRAINING,
-        workout: workouts.find(w => w.id === workoutId) || workouts[0],
+        workout: workouts.find((w) => w.id === workoutId) || workouts[0],
       });
       setLoading(false);
     };
@@ -60,16 +87,7 @@ const AppTabs = () => {
     <Tabs.Navigator
       initialRouteName="Training"
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          switch (route.name) {
-            case 'Workouts':
-              return <Feather name={'list'} size={size} color={color} />;
-            case 'Training':
-              return <AntDesign name={'rocket1'} size={size} color={color} />;
-            case 'Exercises':
-              return <Feather name={'settings'} size={size} color={color} />;
-          }
-        },
+        tabBarIcon: ({ color, size }) => TabBarElement({ route, color, size }),
       })}
       tabBarOptions={{
         activeTintColor: 'tomato',

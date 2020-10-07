@@ -2,10 +2,7 @@ import * as SQLite from 'expo-sqlite';
 
 import * as queries from './scripts';
 import * as data from './data';
-import Workout from '../../models/Workout';
-import Set from '../../models/Set';
-import Exercise from '../../models/Exercise';
-import SetUnit from '../../models/SetUnit';
+import { Workout, Set, Exercise, SetUnit } from '../../models/app';
 
 let db: SQLite.WebSQLDatabase;
 
@@ -26,14 +23,14 @@ type dataRow = {
 
 const executeSqlAsync = (
   query: string,
-  args?: any[]
+  args?: any[],
 ): Promise<SQLite.SQLResultSet> => {
   if (!db) {
     throw new Error('DB NOT READY');
   }
 
   return new Promise(function (resolve, reject) {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(query, args, (_, res) => resolve(res));
     }, reject);
   });
@@ -44,23 +41,23 @@ const fillDb = async () => {
     await Promise.all([
       executeSqlAsync(
         queries.fillTableUnitType(data.unitTypes),
-        data.unitTypes
+        data.unitTypes,
       ),
       executeSqlAsync(
         queries.fillTableExercise(data.exercises),
-        data.exercises
+        data.exercises,
       ),
       executeSqlAsync(
         queries.fillTableSetUnit(data.setUnits),
-        data.setUnits.flat()
+        data.setUnits.flat(),
       ),
       executeSqlAsync(
         queries.fillTableWorkout(data.workouts),
-        data.workouts.flat()
+        data.workouts.flat(),
       ),
       executeSqlAsync(
         queries.fillTableWorkoutSets(data.workoutSets),
-        data.workoutSets.flat()
+        data.workoutSets.flat(),
       ),
     ]);
   } catch (error) {
@@ -69,7 +66,7 @@ const fillDb = async () => {
   }
 };
 
-export const init = async () => {
+export const init = async (): Promise<boolean> => {
   try {
     db = SQLite.openDatabase('trainer.database');
     await executeSqlAsync(queries.createTableUnitType);
@@ -91,12 +88,15 @@ export const init = async () => {
   return true;
 };
 
-export const getData = async () => {
+export const getData = async (): Promise<{
+  workouts: Workout[];
+  exercises: Map<number, Exercise>;
+}> => {
   try {
     const data = await executeSqlAsync(queries.getData);
 
-    let workouts: Workout[] = [];
-    let exercises: Map<number, Exercise> = new Map();
+    const workouts: Workout[] = [];
+    const exercises: Map<number, Exercise> = new Map();
     let currentWorkout: Workout | undefined;
     let currentSets: Set[] = [];
     for (let i = 0; i < data.rows.length; i++) {
@@ -104,14 +104,14 @@ export const getData = async () => {
       if (!exercises.has(row.exerciseId)) {
         exercises.set(
           row.exerciseId,
-          new Exercise(row.exerciseId, row.exerciceTitle)
+          new Exercise(row.exerciseId, row.exerciceTitle),
         );
       }
       const unit = new SetUnit(
         exercises.get(row.exerciseId)!,
         row.typeId,
         row.duration,
-        row.unitRest
+        row.unitRest,
       );
       const set = new Set(unit, row.repetition, row.setRest);
 
@@ -121,7 +121,7 @@ export const getData = async () => {
           row.workoutId,
           row.workoutTitle,
           row.preparation,
-          currentSets
+          currentSets,
         );
         workouts.push(currentWorkout);
       } else {

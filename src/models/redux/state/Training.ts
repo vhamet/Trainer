@@ -1,11 +1,10 @@
-import Workout from '../../Workout';
-import { SetType } from '../../SetUnit';
+import { Workout, SetType } from '../../app';
 
 export class PipeElement {
   constructor(
     public label: string,
     public duration: number,
-    public type: SetType
+    public type: SetType,
   ) {}
 }
 
@@ -14,6 +13,6 @@ export default class Training {
     public workout: Workout | null,
     public pipe: PipeElement[],
     public hasStarted: boolean,
-    public pipeIndex: number
+    public pipeIndex: number,
   ) {}
 }

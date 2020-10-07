@@ -4,8 +4,8 @@ export const createTableUnitType = `
         label TEXT NOT NULL
     );
 `;
-export const fillTableUnitType = (args: string[]) =>
-  `INSERT INTO unitType (label) VALUES ${args.map(_ => '(?) ')}`;
+export const fillTableUnitType = (args: string[]): string =>
+  `INSERT INTO unitType (label) VALUES ${args.map(() => '(?) ')}`;
 
 export const createTableExercise = `
 CREATE TABLE IF NOT EXISTS exercise (
@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS exercise (
     title TEXT NOT NULL
 );
 `;
-export const fillTableExercise = (args: string[]) =>
-  `INSERT INTO exercise (title) VALUES ${args.map(_ => '(?) ')}`;
+export const fillTableExercise = (args: string[]): string =>
+  `INSERT INTO exercise (title) VALUES ${args.map(() => '(?) ')}`;
 
 export const createTableSetUnit = `
     CREATE TABLE IF NOT EXISTS setUnit (
@@ -27,9 +27,10 @@ export const createTableSetUnit = `
         FOREIGN KEY(typeId) REFERENCES unitType(id)
     );
 `;
-export const fillTableSetUnit = (args: number[][]) =>
-  `INSERT INTO setUnit (exerciseId, typeId, duration, rest) VALUES ${args.map(_ => '(?, ?, ?, ?) ')}`;
-
+export const fillTableSetUnit = (args: number[][]): string =>
+  `INSERT INTO setUnit (exerciseId, typeId, duration, rest) VALUES ${args.map(
+    () => '(?, ?, ?, ?) ',
+  )}`;
 
 export const createTableWorkout = `
     CREATE TABLE IF NOT EXISTS workout (
@@ -38,9 +39,10 @@ export const createTableWorkout = `
         preparation INTEGER NOT NULL
     );
 `;
-export const fillTableWorkout = (args: (number | string)[][]) =>
-  `INSERT INTO workout (title, preparation) VALUES ${args.map(_ => '(?, ?) ')}`;
-
+export const fillTableWorkout = (args: (number | string)[][]): string =>
+  `INSERT INTO workout (title, preparation) VALUES ${args.map(
+    () => '(?, ?) ',
+  )}`;
 
 export const createTableWorkoutSets = `
     CREATE TABLE IF NOT EXISTS workoutSets (
@@ -52,10 +54,10 @@ export const createTableWorkoutSets = `
         FOREIGN KEY(setUnitId) REFERENCES setUnit(id)
     );
 `;
-export const fillTableWorkoutSets = (args: number[][]) =>
-  `INSERT INTO workoutSets (workoutId, setUnitId, rest, repetition) VALUES ${args.map(_ => '(?, ?, ?, ?) ')}`;
-
-
+export const fillTableWorkoutSets = (args: number[][]): string =>
+  `INSERT INTO workoutSets (workoutId, setUnitId, rest, repetition) VALUES ${args.map(
+    () => '(?, ?, ?, ?) ',
+  )}`;
 
 export const checkDbInitialized = `SELECT 1 FROM exercise`;
 

@@ -10,6 +10,6 @@ export default class SetUnit {
     public exercise: Exercise,
     public type: number,
     public duration: number,
-    public rest: number
+    public rest: number,
   ) {}
 }

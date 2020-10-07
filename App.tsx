@@ -21,7 +21,7 @@ const fetchFonts = () =>
     digital: require('./assets/fonts/digital-7.ttf'),
   });
 
-export default function App() {
+const App: React.FC = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   if (!fontLoaded) {
@@ -43,4 +43,6 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
-}
+};
+
+export default App;
