@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Countdown from '../Countdown/Countdown';
@@ -84,11 +84,19 @@ const RunningSet: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
+        <Text style={styles.exercise}>
+          {pipe[pipeIndex].label.toUpperCase()}
+        </Text>
         {pipe[pipeIndex].type === SetType.Duration ? (
           <Countdown
-            count={countdown!}
-            duration={pipe[pipeIndex].duration}
-            label={doneLabel}
+            label={doneLabel ?? `${countdown}`}
+            percentage={
+              doneLabel
+                ? 100
+                : ((pipe[pipeIndex].duration - (countdown || 0)) /
+                    pipe[pipeIndex].duration) *
+                  100
+            }
           />
         ) : (
           <StyledButton title="DONE" onPress={handleNext} />
@@ -106,7 +114,7 @@ const RunningSet: React.FC = () => {
       </View>
 
       <Cards
-        exercise={pipe[pipeIndex].label}
+        exercise={pipeIndex === 0 ? '-' : pipe[pipeIndex].label}
         currentRep={pipe[pipeIndex].currentRep}
         duration={pipe[pipeIndex].sDuration}
         next={next ? next.label : 'FINISHED !'}
@@ -122,13 +130,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    padding: 10,
+  },
+  exercise: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'tomato',
+    textAlign: 'center',
   },
   content: {
-    flex: 1,
-    justifyContent: 'center',
+    flex: 2,
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 20,
-    padding: 10,
+    paddingVertical: 30,
   },
   cardTitle: {
     color: 'white',

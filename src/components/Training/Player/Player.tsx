@@ -23,14 +23,13 @@ const Player: React.FC<PlayerProps> = ({
   onPrevious,
   onNext,
 }: PlayerProps) => {
-  console.log('render player')
   return (
     <View style={styles.container}>
       <TouchableIcon onPress={onPrevious} disabled={!hasPrevious}>
         <AntDesign
           name="stepbackward"
           size={32}
-          color={hasPrevious ? 'tomato' : '#ffd0c7'}
+          color={hasPrevious ? 'tomato' : '#ffefec'}
         />
         ;
       </TouchableIcon>
@@ -39,13 +38,13 @@ const Player: React.FC<PlayerProps> = ({
           <MaterialIcons
             name="pause"
             size={38}
-            color={canPause ? 'tomato' : 'transparent'}
+            color={canPause ? 'tomato' : '#ffefec'}
           />
         ) : (
           <AntDesign
             name="caretright"
             size={32}
-            color={canPause ? 'tomato' : 'transparent'}
+            color={canPause ? 'tomato' : '#ffefec'}
           />
         )}
       </TouchableIcon>
@@ -53,7 +52,7 @@ const Player: React.FC<PlayerProps> = ({
         <AntDesign
           name="stepforward"
           size={32}
-          color={hasNext ? 'tomato' : '#ffd0c7'}
+          color={hasNext ? 'tomato' : '#ffefec'}
         />
         ;
       </TouchableIcon>

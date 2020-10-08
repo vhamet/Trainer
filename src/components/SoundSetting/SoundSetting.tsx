@@ -31,7 +31,7 @@ const SoundSetting: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 5,
     borderColor: 'rgba(255,99,71, 0.5)',
     borderWidth: 2,
     borderRadius: 50,

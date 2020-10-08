@@ -3,18 +3,14 @@ import { Text, View, StyleSheet } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 
 interface CountdownProps {
-  count: number;
-  duration: number;
-  label?: string;
+  label: string;
+  percentage: number;
 }
 
 const Countdown: React.FC<CountdownProps> = ({
-  count,
-  duration,
   label,
+  percentage,
 }: CountdownProps) => {
-  const percentage = label ? 100 : ((duration - count) / duration) * 100;
-
   return (
     <View style={styles.container}>
       <ProgressCircle
@@ -26,7 +22,7 @@ const Countdown: React.FC<CountdownProps> = ({
         bgColor="#303030"
       >
         <Text style={{ ...styles.count, ...(label ? styles.go : {}) }}>
-          {label || count}
+          {label}
         </Text>
       </ProgressCircle>
     </View>
@@ -47,4 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Countdown;
+export default React.memo(
+  Countdown,
+  (prev, next) => prev.percentage === next.percentage || next.label === '0',
+);

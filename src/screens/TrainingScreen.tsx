@@ -27,14 +27,18 @@ const TrainingScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.sound}>
-        <SoundSetting />
+      <View style={styles.topBar}>
+        <View style={styles.sound}>
+          <SoundSetting />
+        </View>
+        <Text style={styles.title}>{workout.title.toUpperCase()}</Text>
       </View>
-      <Text style={styles.title}>{workout.title}</Text>
       {hasStarted ? (
         <RunningSet />
       ) : (
-        <StyledButton title="START TRAINING" onPress={handleStart} />
+        <View style={styles.start}>
+          <StyledButton title="START TRAINING" onPress={handleStart} />
+        </View>
       )}
     </View>
   );
@@ -43,21 +47,33 @@ const TrainingScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
-    padding: 10,
-    paddingTop: 80,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgb(25,25,25)',
   },
+  topBar: {
+    width: '100%',
+    marginTop: 30,
+    padding: 10,
+    alignItems: 'center',
+    position: 'relative',
+    borderBottomWidth: 0.5,
+    borderColor: '#DEDEDE',
+    backgroundColor: '#303030',
+  },
   sound: {
     position: 'absolute',
-    top: 45,
+    top: 15,
     right: 5,
   },
   title: {
     color: 'tomato',
     fontSize: 30,
+    fontWeight: 'bold',
+  },
+  start: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
 
