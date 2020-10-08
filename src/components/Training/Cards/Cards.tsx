@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Cards;
+export default React.memo(Cards);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 class Timer {
   remaining: number;
@@ -63,15 +63,15 @@ const useCountdown = (): {
 
   const stop = () => timer && timer.clear();
 
-  const pause = () => {
+  const pause = useCallback(() => {
     setIsRunning(false);
     timer.pause();
-  };
+  }, []);
 
-  const resume = () => {
+  const resume = useCallback(() => {
     setIsRunning(true);
     timer.resume();
-  };
+  }, []);
 
   return {
     count,

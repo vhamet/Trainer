@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -72,14 +72,14 @@ const RunningSet: React.FC = () => {
     }
   }, [doneLabel]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     stop();
     dispatch({ type: GO_TO_PIPE_INDEX, index: pipeIndex + 1 });
-  };
-  const handlePrevious = () => {
+  }, [pipeIndex]);
+  const handlePrevious = useCallback(() => {
     stop();
     dispatch({ type: GO_TO_PIPE_INDEX, index: pipeIndex - 1 });
-  };
+  }, [pipeIndex]);
 
   return (
     <View style={styles.container}>

@@ -23,6 +23,7 @@ const Player: React.FC<PlayerProps> = ({
   onPrevious,
   onNext,
 }: PlayerProps) => {
+  console.log('render player')
   return (
     <View style={styles.container}>
       <TouchableIcon onPress={onPrevious} disabled={!hasPrevious}>
@@ -71,4 +72,4 @@ const styles = StyleSheet.create({
   hidden: { opacity: 0, height: 0 },
 });
 
-export default Player;
+export default React.memo(Player);
