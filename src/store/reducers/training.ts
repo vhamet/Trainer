@@ -18,6 +18,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
   const pipe = [
     new PipeElement(
       'GET READY !',
+      `${workout.sets.length}`,
       ' ',
       workout.preparation,
       SetType.Duration,
@@ -25,6 +26,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
     ),
   ];
 
+  let currentSet = 1;
   for (const set of workout.sets) {
     for (let rep = 1; rep <= set.repetition; rep++) {
       const currentRep =
@@ -36,6 +38,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
       pipe.push(
         new PipeElement(
           set.unit.exercise.title,
+          `${currentSet}/${workout.sets.length}`,
           currentRep,
           set.unit.duration,
           set.unit.type,
@@ -47,6 +50,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
         pipe.push(
           new PipeElement(
             'REST',
+            `${currentSet}/${workout.sets.length}`,
             ' ',
             set.unit.rest,
             SetType.Duration,
@@ -60,7 +64,8 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
       pipe.push(
         new PipeElement(
           `REST`,
-          ' ',
+          `${currentSet}/${workout.sets.length}`,
+          'END OF SET',
           set.rest,
           SetType.Duration,
           `${set.rest}s`,
@@ -68,6 +73,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
         ),
       );
     }
+    currentSet++;
   }
 
   return pipe;

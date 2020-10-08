@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '40%',
+    height: 40,
   },
   hidden: { opacity: 0, height: 0 },
 });

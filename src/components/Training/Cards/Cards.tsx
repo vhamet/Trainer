@@ -7,6 +7,7 @@ interface CardsProps {
   currentRep: string;
   duration: string;
   next: string;
+  nextRep: string;
   set: string;
   isDuration: boolean;
 }
@@ -16,6 +17,7 @@ const Cards: React.FC<CardsProps> = ({
   currentRep,
   duration,
   next,
+  nextRep,
   set,
   isDuration,
 }: CardsProps) => {
@@ -39,7 +41,7 @@ const Cards: React.FC<CardsProps> = ({
         <Card>
           <Text style={styles.cardTitle}>NEXT</Text>
           <Text style={styles.cardContent}>{next}</Text>
-          <Text></Text>
+          <Text style={styles.sub}>{nextRep}</Text>
         </Card>
         <Card>
           <Text style={styles.cardTitle}>SET</Text>

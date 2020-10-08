@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import TouchableIcon from '../TouchableIcon/TouchableIcon';
 import { State } from '../../models/redux';
 import { TOGGLE_SOUND } from '../../store/actions/settings';
+import useSound from '../../utils/hooks/useSound';
 
 const SoundSetting: React.FC = () => {
   const dispatch = useDispatch();
   const { soundOn } = useSelector((state: State) => state.settings);
   const toggleSound = () => dispatch({ type: TOGGLE_SOUND });
+
+  useSound();
 
   return (
     <View style={styles.container}>

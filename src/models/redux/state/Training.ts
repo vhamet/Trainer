@@ -3,6 +3,7 @@ import { Workout, SetType } from '../../app';
 export class PipeElement {
   constructor(
     public label: string,
+    public currentSet: string,
     public currentRep: string,
     public duration: number,
     public type: SetType,

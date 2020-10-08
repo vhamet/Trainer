@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Center from '../components/Center/Center';
 import RunningSet from '../components/Training/RunningSet/RunningSet';
-import StylableButton from '../components/StyledButton/StyledButton';
+import StyledButton from '../components/StyledButton/StyledButton';
 import { State } from '../models/redux';
 import { START_TRAINING } from '../store/actions/training';
 import SoundSetting from '../components/SoundSetting/SoundSetting';
@@ -34,7 +34,7 @@ const TrainingScreen: React.FC = () => {
       {hasStarted ? (
         <RunningSet />
       ) : (
-        <StylableButton title="START TRAINING" onPress={handleStart} />
+        <StyledButton title="START TRAINING" onPress={handleStart} />
       )}
     </View>
   );

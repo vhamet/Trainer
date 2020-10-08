@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Audio } from 'expo-av';
 
 import Countdown from '../Countdown/Countdown';
 import Player from '../Player/Player';
+import StyledButton from '../../StyledButton/StyledButton';
+import Cards from '../Cards/Cards';
+import useSound from '../../../utils/hooks/useSound';
 import useCountdown from '../../../utils/hooks/useCountdown';
 import { State } from '../../../models/redux';
 import { SetType } from '../../../models/app';
 import { GO_TO_PIPE_INDEX } from '../../../store/actions/training';
-import StylableButton from '../../StyledButton/StyledButton';
-import Cards from '../Cards/Cards';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const beepSource = require('../../../../assets/sounds/Beep.mp3');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const bleepSource = require('../../../../assets/sounds/Bleep.mp3');
 
 const RunningSet: React.FC = () => {
   const dispatch = useDispatch();
-  const { workout, pipe, pipeIndex } = useSelector(
+  const { pipe, pipeIndex } = useSelector(
     (state: State) => state.currentTraining,
   );
   const { soundOn } = useSelector((state: State) => state.settings);
+  const { beep, bleep } = useSound();
 
   const next = pipeIndex < pipe.length - 1 ? pipe[pipeIndex + 1] : null;
 
@@ -36,27 +32,9 @@ const RunningSet: React.FC = () => {
     stop,
   } = useCountdown();
 
-  const [beep, setBeep] = useState<Audio.Sound>();
-  const [bleep, setBleep] = useState<Audio.Sound>();
   useEffect(() => {
-    const loadSound = async () => {
-      const sound1 = new Audio.Sound();
-      sound1.loadAsync(beepSource).then(() => setBeep(sound1));
-      const sound2 = new Audio.Sound();
-      sound2.loadAsync(bleepSource).then(() => setBleep(sound2));
-
-      return async () => {
-        await sound1.unloadAsync();
-        await sound2.unloadAsync();
-      };
-    };
-
-    loadSound();
-  }, []);
-
-  useEffect(() => {
-    if (soundOn && !!countdown && countdown < 4 && countdown > 0 && !!beep) {
-      beep.replayAsync();
+    if (soundOn && !!countdown && countdown < 4 && countdown > 0) {
+      beep();
     }
   }, [countdown]);
 
@@ -78,14 +56,19 @@ const RunningSet: React.FC = () => {
   }, [done]);
 
   useEffect(() => {
-    if (doneLabel) {
-      if (soundOn && doneLabel === 'GO!' && !!bleep) {
-        bleep.replayAsync();
-      }
+    const handleNextAsync = () => {
       setTimeout(() => {
         handleNext();
         setDoneLabel(undefined);
       }, 1000);
+    };
+
+    if (doneLabel) {
+      if (soundOn) {
+        bleep().then(() => handleNextAsync());
+      } else {
+        handleNextAsync();
+      }
     }
   }, [doneLabel]);
 
@@ -108,7 +91,7 @@ const RunningSet: React.FC = () => {
             label={doneLabel}
           />
         ) : (
-          <StylableButton title="DONE" onPress={handleNext} />
+          <StyledButton title="DONE" onPress={handleNext} />
         )}
 
         <Player
@@ -127,7 +110,8 @@ const RunningSet: React.FC = () => {
         currentRep={pipe[pipeIndex].currentRep}
         duration={pipe[pipeIndex].sDuration}
         next={next ? next.label : 'FINISHED !'}
-        set={`${workout?.sets.length}`}
+        nextRep={next ? next.currentRep : ' '}
+        set={pipe[pipeIndex].currentSet}
         isDuration={pipe[pipeIndex].type === SetType.Duration}
       />
     </View>
