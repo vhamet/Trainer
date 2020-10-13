@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { Set, SetType } from '../../../models/app';
+import { Set, SetTypeEnum } from '../../../models/app';
 
 interface SetItemProps {
   set: Set;
@@ -13,7 +13,7 @@ const SetItem: React.FC<SetItemProps> = ({
   onSelect,
 }: SetItemProps) => {
   const duration =
-    unit.type === SetType.Repetition
+    unit.type === SetTypeEnum.Repetition
       ? `x${unit.duration}`
       : `${unit.duration}s`;
 

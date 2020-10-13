@@ -1,4 +1,4 @@
-import { Workout, SetType } from '../../app';
+import { Workout, SetTypeEnum } from '../../app';
 
 export class PipeElement {
   constructor(
@@ -6,7 +6,7 @@ export class PipeElement {
     public currentSet: string,
     public currentRep: string,
     public duration: number,
-    public type: SetType,
+    public type: SetTypeEnum,
     public sDuration: string,
     public isRest?: boolean,
   ) {}

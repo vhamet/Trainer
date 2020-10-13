@@ -4,7 +4,7 @@ import {
   GO_TO_PIPE_INDEX,
 } from '../actions/training';
 import Training, { PipeElement } from '../../models/redux/state/training';
-import { Workout, SetType } from '../../models/app';
+import { Workout, SetTypeEnum } from '../../models/app';
 import { TrainingActionTypes } from '../../models/redux';
 
 const initialState: Training = {
@@ -21,7 +21,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
       `${workout.sets.length}`,
       ' ',
       workout.preparation,
-      SetType.Duration,
+      SetTypeEnum.Duration,
       '5s',
     ),
   ];
@@ -32,7 +32,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
       const currentRep =
         set.repetition > 1 ? ` ${rep} / ${set.repetition}` : ' ';
       const sDuration =
-        set.unit.type === SetType.Repetition
+        set.unit.type === SetTypeEnum.Repetition
           ? `x${set.unit.duration} `
           : `${set.unit.duration}s`;
       pipe.push(
@@ -53,7 +53,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
             `${currentSet}/${workout.sets.length}`,
             ' ',
             set.unit.rest,
-            SetType.Duration,
+            SetTypeEnum.Duration,
             `${set.unit.rest}s`,
             true,
           ),
@@ -67,7 +67,7 @@ const workoutPipe = (workout: Workout): PipeElement[] => {
           `${currentSet}/${workout.sets.length}`,
           'END OF SET',
           set.rest,
-          SetType.Duration,
+          SetTypeEnum.Duration,
           `${set.rest}s`,
           true,
         ),

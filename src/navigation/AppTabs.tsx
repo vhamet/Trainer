@@ -54,8 +54,8 @@ const AppTabs: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       await db.init();
-      const { workouts, exercises } = await db.getData();
-      dispatch({ type: INIT_DATA, workouts, exercises });
+      const { workouts, exercises, setTypes } = await db.getData();
+      dispatch({ type: INIT_DATA, workouts, exercises, setTypes });
     };
 
     fetchData();

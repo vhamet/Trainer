@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 
 import * as queries from './scripts';
 import * as data from './data';
-import { Workout, Set, Exercise, SetUnit } from '../../models/app';
+import { Workout, Set, Exercise, SetUnit, SetType } from '../../models/app';
 
 let db: SQLite.WebSQLDatabase;
 
@@ -19,6 +19,11 @@ type dataRow = {
   setRest: number;
   exerciseId: number;
   exerciceTitle: string;
+};
+
+type typeRow = {
+  id: number;
+  label: string;
 };
 
 const executeSqlAsync = (
@@ -91,9 +96,13 @@ export const init = async (): Promise<boolean> => {
 export const getData = async (): Promise<{
   workouts: Workout[];
   exercises: Map<number, Exercise>;
+  setTypes: SetType[];
 }> => {
   try {
-    const data = await executeSqlAsync(queries.getData);
+    const [data, types] = await Promise.all([
+      executeSqlAsync(queries.getData),
+      executeSqlAsync(queries.getSetTypes),
+    ]);
 
     const workouts: Workout[] = [];
     const exercises: Map<number, Exercise> = new Map();
@@ -129,7 +138,14 @@ export const getData = async (): Promise<{
       }
     }
 
-    return { workouts, exercises };
+    const setTypes = [];
+    for (let i = 0; i < types.rows.length; i++) {
+      const row: typeRow = types.rows.item(i);
+      console.log(row)
+      setTypes.push(new SetType(row.id, row.label));
+    }
+
+    return { workouts, exercises, setTypes };
   } catch (error) {
     console.log('DB FETCHING DATA ERROR:', error);
     throw Error('Could not fetch data ! Please try again later');

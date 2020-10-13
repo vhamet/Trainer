@@ -4,6 +4,7 @@ import { DataStateType, DataActionTypes } from '../../models/redux';
 const initialState: DataStateType = {
   workouts: [],
   exercises: new Map(),
+  setTypes: [],
 };
 
 export default (
@@ -12,7 +13,11 @@ export default (
 ): DataStateType => {
   switch (action.type) {
     case INIT_DATA:
-      return { workouts: action.workouts, exercises: action.exercises };
+      return {
+        workouts: action.workouts,
+        exercises: action.exercises,
+        setTypes: action.setTypes,
+      };
     default:
       return state;
   }

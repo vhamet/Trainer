@@ -9,7 +9,7 @@ import Cards from '../Cards/Cards';
 import useSound from '../../../utils/hooks/useSound';
 import useCountdown from '../../../utils/hooks/useCountdown';
 import { State } from '../../../models/redux';
-import { SetType } from '../../../models/app';
+import { SetTypeEnum } from '../../../models/app';
 import { GO_TO_PIPE_INDEX } from '../../../store/actions/training';
 
 const RunningSet: React.FC = () => {
@@ -40,7 +40,7 @@ const RunningSet: React.FC = () => {
 
   useEffect(() => {
     if (
-      pipe[pipeIndex].type === SetType.Duration &&
+      pipe[pipeIndex].type === SetTypeEnum.Duration &&
       pipe[pipeIndex].duration > 0
     ) {
       //   startCountdown(pipe[pipeIndex].duration);
@@ -87,7 +87,7 @@ const RunningSet: React.FC = () => {
         <Text style={styles.exercise}>
           {pipe[pipeIndex].label.toUpperCase()}
         </Text>
-        {pipe[pipeIndex].type === SetType.Duration ? (
+        {pipe[pipeIndex].type === SetTypeEnum.Duration ? (
           <Countdown
             label={doneLabel ?? `${countdown}`}
             percentage={
@@ -103,7 +103,7 @@ const RunningSet: React.FC = () => {
         )}
 
         <Player
-          canPause={pipe[pipeIndex].type === SetType.Duration}
+          canPause={pipe[pipeIndex].type === SetTypeEnum.Duration}
           isRunning={isRunning}
           hasPrevious={pipeIndex > 0}
           hasNext={pipeIndex < pipe.length - 1}
@@ -120,7 +120,7 @@ const RunningSet: React.FC = () => {
         next={next ? next.label : 'FINISHED !'}
         nextRep={next ? next.currentRep : ' '}
         set={pipe[pipeIndex].currentSet}
-        isDuration={pipe[pipeIndex].type === SetType.Duration}
+        isDuration={pipe[pipeIndex].type === SetTypeEnum.Duration}
       />
     </View>
   );

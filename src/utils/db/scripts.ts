@@ -88,3 +88,5 @@ export const getData = `
         LEFT JOIN exercise ex ON ex.id = su.exerciseId
         LEFT JOIN unitType ut ON ut.id = su.typeId
     `;
+
+export const getSetTypes = 'SELECT id, label FROM unitType';
