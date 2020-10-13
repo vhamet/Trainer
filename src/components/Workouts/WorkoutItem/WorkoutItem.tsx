@@ -1,45 +1,58 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Workout } from '../../../models/app';
+import { AntDesign, Feather } from '@expo/vector-icons';
 
-import Workout from '../../../models/Workout';
+import TouchableIcon from '../../TouchableIcon/TouchableIcon';
 
 interface WorkoutItemProps {
-  workout: Workout;
+  title: string;
+  duration: string;
   onSelect: (workout: Workout) => void;
+  onEdit: (id: number) => void;
 }
 
 const WorkoutItem: React.FC<WorkoutItemProps> = ({
-  workout,
+  title,
+  duration,
   onSelect,
+  onEdit,
 }: WorkoutItemProps) => {
   return (
-    <TouchableOpacity
-      onPress={() => onSelect(workout)}
-      style={styles.container}
-    >
-      <View style={styles.content}>
-        <Text>{workout.title}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.text}>{duration}</Text>
+      <TouchableIcon onPress={onSelect} style={styles.start}>
+        <AntDesign name="playcircleo" size={28} color="tomato" />
+      </TouchableIcon>
+      <TouchableIcon onPress={onEdit}>
+        <Feather name="edit" size={28} color="tomato" />
+      </TouchableIcon>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
-    width: '100%',
-    marginBottom: 10,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#75b34c',
-    borderWidth: 1,
-  },
-
-  content: {
-    paddingVertical: 20,
+    flex: 1,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
+    borderBottomWidth: 0.5,
+    borderColor: 'tomato',
+  },
+  start: {
+    marginHorizontal: 10,
+  },
+  title: {
+    flex: 1,
+    color: 'tomato',
+  },
+  text: {
+    color: 'tomato',
+    fontSize: 12,
   },
 });
 

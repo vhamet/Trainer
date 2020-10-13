@@ -23,7 +23,6 @@ const SoundSetting: React.FC = () => {
           size={16}
           color="rgba(255,99,71, 0.5)"
         />
-        ;
       </TouchableIcon>
     </View>
   );

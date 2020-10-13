@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 interface TouchableIconProps {
-  onPress: () => void;
+  onPress: (param?: any) => void;
   children: React.ReactNode;
   [prop: string]: unknown;
 }

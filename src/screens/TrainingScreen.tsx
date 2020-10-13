@@ -1,19 +1,31 @@
-import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import Center from '../components/Center/Center';
+import TopBar from '../components/TopBar/TopBar';
 import RunningSet from '../components/Training/RunningSet/RunningSet';
 import StyledButton from '../components/StyledButton/StyledButton';
 import { State } from '../models/redux';
-import { START_TRAINING } from '../store/actions/training';
-import SoundSetting from '../components/SoundSetting/SoundSetting';
+import { INIT_TRAINING, START_TRAINING } from '../store/actions/training';
+import { AppTabsParamList } from '../navigation/AppTabs';
 
-const TrainingScreen: React.FC = () => {
+type TrainingProps = BottomTabScreenProps<AppTabsParamList, 'Training'>;
+
+const TrainingScreen: React.FC<TrainingProps> = ({
+  route: { params },
+}: TrainingProps) => {
   const dispatch = useDispatch();
   const { workout, hasStarted } = useSelector(
     (state: State) => state.currentTraining,
   );
+
+  useEffect(() => {
+    if (params?.workout) {
+      dispatch({ type: INIT_TRAINING, workout: params.workout });
+    }
+  }, [params]);
 
   if (!workout) {
     return (
@@ -27,12 +39,7 @@ const TrainingScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topBar}>
-        <View style={styles.sound}>
-          <SoundSetting />
-        </View>
-        <Text style={styles.title}>{workout.title.toUpperCase()}</Text>
-      </View>
+      <TopBar title={workout.title} />
       {hasStarted ? (
         <RunningSet />
       ) : (
@@ -49,27 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgb(25,25,25)',
-  },
-  topBar: {
-    width: '100%',
-    marginTop: 30,
-    padding: 10,
-    alignItems: 'center',
-    position: 'relative',
-    borderBottomWidth: 0.5,
-    borderColor: '#DEDEDE',
-    backgroundColor: '#303030',
-  },
-  sound: {
-    position: 'absolute',
-    top: 15,
-    right: 5,
-  },
-  title: {
-    color: 'tomato',
-    fontSize: 30,
-    fontWeight: 'bold',
+    backgroundColor: '#191919',
   },
   start: {
     flex: 1,
